@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@types/eslint__js": "^8.42.3",
+    "eslint": "^9.12.0",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.8.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf ./dist",
+    "start": "npm run clean && npm run build && node dist/index.js"
+  }
+}

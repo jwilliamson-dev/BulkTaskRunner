@@ -1,7 +1,4 @@
-import type {
-  CompletedJob,
-  IJobReporter,
-} from '../components/bulk-task-runner.d'
+import type { CompletedJob, IJobReporter } from '../components/types'
 
 export default class SampleJobReporter implements IJobReporter {
   handleCompletedJob(job: CompletedJob): void {

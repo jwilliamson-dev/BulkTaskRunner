@@ -1,4 +1,4 @@
-import type { IJobHandler, Job } from '../components/bulk-task-runner.d'
+import type { IJobHandler, Job } from '../components/types'
 
 export default class SampleJobHandler implements IJobHandler {
   MAX_CONCURRENCY: number = 10

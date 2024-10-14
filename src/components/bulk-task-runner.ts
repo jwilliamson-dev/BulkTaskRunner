@@ -1,9 +1,4 @@
-import type {
-  IJobHandler,
-  IJobReader,
-  IJobReporter,
-  Job,
-} from './bulk-task-runner.d'
+import type { IJobHandler, IJobReader, IJobReporter, Job } from './types'
 
 export default class BulkTaskRunner {
   private jobReader: IJobReader

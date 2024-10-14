@@ -3,9 +3,9 @@ import type {
   IJobReader,
   IJobReporter,
   Job,
-} from './orchestrator.d'
+} from './bulk-task-runner.d'
 
-export default class Orchestrator {
+export default class BulkTaskRunner {
   private jobReader: IJobReader
   private readingComplete: boolean = false
   private jobHandler: IJobHandler

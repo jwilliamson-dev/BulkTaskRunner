@@ -1,4 +1,7 @@
-import type { CompletedJob, IJobReporter } from '../components/orchestrator.d'
+import type {
+  CompletedJob,
+  IJobReporter,
+} from '../components/bulk-task-runner.d'
 
 export default class SampleJobReporter implements IJobReporter {
   handleCompletedJob(job: CompletedJob): void {

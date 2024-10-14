@@ -1,4 +1,4 @@
-import type { IJobReader } from '../components/orchestrator.d'
+import type { IJobReader } from '../components/bulk-task-runner.d'
 
 export default class SampleJobReader implements IJobReader {
   done: boolean = false

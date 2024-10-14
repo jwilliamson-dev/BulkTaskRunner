@@ -1,5 +1,5 @@
 import { exit } from 'process'
-import Orchestrator from './components/orchestrator'
+import BulkTaskRunner from './components/bulk-task-runner'
 
 const main = async (
   readerModuleName: string,
@@ -10,7 +10,7 @@ const main = async (
   const handlerModule = await import(`./job-handlers/${handlerModuleName}`)
   const reporterModule = await import(`./job-reporters/${reporterModuleName}`)
 
-  const orchestrator = new Orchestrator(
+  const orchestrator = new BulkTaskRunner(
     new readerModule.default(),
     new handlerModule.default(),
     new reporterModule.default()

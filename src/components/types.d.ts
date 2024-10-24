@@ -1,6 +1,6 @@
 export interface IJobHandler {
   MAX_CONCURRENCY: number
-  processJob(job: Job): void
+  processJob(job: WorkingJob | CompletedJob): void
 }
 
 export interface IJobReader {
@@ -10,7 +10,7 @@ export interface IJobReader {
   ): Promise<Record<string, string | number | object>[]>
 }
 
-export interface IJobReporter {
+export interface IJobLogger {
   handleCompletedJob(job: CompletedJob): void
 }
 
@@ -26,6 +26,7 @@ export interface WorkingJob {
   createdAt: string
   data: Record<string, string | number | object>
   id: `${string}-${string}-${string}-${string}-${string}`
+  result?: Record<string, string | number | object>
 }
 
 export interface CompletedJob {

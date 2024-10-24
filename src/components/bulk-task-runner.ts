@@ -1,25 +1,28 @@
-import type { IJobHandler, IJobReader, IJobReporter, Job } from './types'
+import type {
+  CompletedJob,
+  IJobHandler,
+  IJobReader,
+  IJobLogger,
+  PendingJob,
+  WorkingJob,
+} from './types'
 
 export default class BulkTaskRunner {
   private jobReader: IJobReader
   private readingComplete: boolean = false
   private jobHandler: IJobHandler
-  private jobReporter: IJobReporter
-  private pendingQueue: Job[] = []
-  private workingQueue: Job[] = []
+  private jobLogger: IJobLogger
+  private pendingQueue: Array<PendingJob> = []
+  private workingQueue: Array<WorkingJob | CompletedJob> = []
   private MAX_WORKING_QUEUE: number
 
   private readonly MAX_PENDING_QUEUE = 1000
 
-  constructor(
-    reader: IJobReader,
-    handler: IJobHandler,
-    reporter: IJobReporter
-  ) {
+  constructor(reader: IJobReader, handler: IJobHandler, logger: IJobLogger) {
     this.jobHandler = handler
     this.MAX_WORKING_QUEUE = handler.MAX_CONCURRENCY
     this.jobReader = reader
-    this.jobReporter = reporter
+    this.jobLogger = logger
   }
 
   async run() {
@@ -59,30 +62,28 @@ export default class BulkTaskRunner {
   async handleJobs() {
     await this.sleep(5)
 
-    while (this.pendingQueue.length > 0 || !this.readingComplete) {
+    while (
+      this.pendingQueue.length > 0 ||
+      !this.readingComplete ||
+      this.workingQueue.length > 0
+    ) {
       // Clear out completed jobs
-      const completedJobIndicies = this.workingQueue.reduce((acc, job, ind) => {
-        if (job.status === 'complete' || job.status === 'error') {
-          return [ind, ...acc]
+      const workingJobs: WorkingJob[] = []
+      this.workingQueue.forEach((job) => {
+        if (job.status === 'working') {
+          workingJobs.push(job)
+        } else {
+          this.jobLogger.handleCompletedJob(job)
         }
-        return acc
-      }, [] as number[])
-
-      completedJobIndicies.forEach((ind) => {
-        const job = this.workingQueue.splice(ind, 1)
-        job.forEach((job) => {
-          if (job.status === 'complete' || job.status === 'error') {
-            this.jobReporter.handleCompletedJob(job)
-          }
-        })
       })
+      this.workingQueue = workingJobs
 
       // If working queue is maxed out or if there are no jobs in the pending queue, wait and continue
       if (
         this.workingQueue.length === this.MAX_WORKING_QUEUE ||
         this.pendingQueue.length === 0
       ) {
-        await this.sleep(60)
+        await this.sleep(10)
         continue
       }
 

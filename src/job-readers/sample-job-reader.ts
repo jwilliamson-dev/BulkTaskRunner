@@ -4,7 +4,11 @@ export default class SampleJobReader implements IJobReader {
   done: boolean = false
   private _jobsRead: number = 0
   private static readonly MAX_JOBS = 100
+  private _params: null = null
 
+  constructor(params: null) {
+    this._params = params
+  }
   private increaseJobsRead() {
     this._jobsRead += 1
     this.done = this._jobsRead >= SampleJobReader.MAX_JOBS

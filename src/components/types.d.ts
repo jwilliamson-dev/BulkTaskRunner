@@ -1,40 +1,21 @@
-export interface IJobHandler {
-  MAX_CONCURRENCY: number
-  processJob(job: WorkingJob | CompletedJob): void
-}
-
-export interface IJobReader {
-  done: boolean
-  readJobs(
-    numJobsToRead: number
-  ): Promise<Record<string, string | number | object>[]>
-}
-
-export interface IJobLogger {
-  handleCompletedJob(job: CompletedJob): void
+export interface TaskRunnerParams {
+  reader: AsyncGenerator<JobData, void, void>
+  handler: (job: PendingJob) => Promise<CompletedJob>
+  logger: (job: CompletedJob) => void
+  maxConcurrency: number
 }
 
 export interface PendingJob {
+  data: JobData
+  id: `${string}-${string}-${string}-${string}-${string}`
   status: 'pending'
-  createdAt: string
-  data: Record<string, string | number | object>
-  id: `${string}-${string}-${string}-${string}-${string}`
-}
-
-export interface WorkingJob {
-  status: 'working'
-  createdAt: string
-  data: Record<string, string | number | object>
-  id: `${string}-${string}-${string}-${string}-${string}`
-  result?: Record<string, string | number | object>
 }
 
 export interface CompletedJob {
-  status: 'complete' | 'error'
-  createdAt: string
-  data: Record<string, string | number | object>
+  data: JobData
   id: `${string}-${string}-${string}-${string}-${string}`
-  result: Record<string, string | number | object>
+  result: JobData
+  status: 'success' | 'fail'
 }
 
-export type Job = PendingJob | WorkingJob | CompletedJob
+export type JobData = Record<string, string | number | object>

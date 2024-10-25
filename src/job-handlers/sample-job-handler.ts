@@ -1,15 +1,13 @@
-import type { CompletedJob, IJobHandler, WorkingJob } from '../components/types'
+import { CompletedJob, type PendingJob } from '../components/types'
 
-export default class SampleJobHandler implements IJobHandler {
-  MAX_CONCURRENCY: number = 10
-  private _params: null = null
-
-  constructor(params: null) {
-    this._params = params
-  }
-
-  processJob(job: CompletedJob | WorkingJob) {
-    job.status = 'complete'
-    job.result = job.data
-  }
+const SampleJobHandler = async (job: PendingJob) => {
+  return new Promise<CompletedJob>((resolve) => {
+    resolve({
+      ...job,
+      status: 'success',
+      result: job.data,
+    })
+  })
 }
+
+export default SampleJobHandler

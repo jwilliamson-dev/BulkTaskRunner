@@ -1,4 +1,7 @@
 {
+  "name": "bulk-task-runner",
+  "version": "1.0.0",
+  "description": "process records in bulk",
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@types/eslint__js": "^8.42.3",
@@ -6,25 +9,26 @@
     "eslint": "^9.12.0",
     "pkgroll": "^2.5.0",
     "prettier": "^3.3.3",
-    "tsx": "^4.19.1",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.8.1"
   },
   "scripts": {
-    "build": "pkgroll --clean-dist --minify",
-    "dev": "tsx src/index.ts",
-    "start": "npm run build && node dist/index.js"
+    "build": "pkgroll --clean-dist",
+    "format": "prettier -w .",
+    "lint": "eslint ."
   },
   "type": "module",
   "dependencies": {
     "csv-parse": "^5.5.6"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     "import": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
-  }
+  },
+  "prettier": "./prettier.config.js",
+  "repository": "jwilliamson-dev/BulkTaskRunner"
 }

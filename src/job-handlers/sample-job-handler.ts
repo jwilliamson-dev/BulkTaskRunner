@@ -1,13 +1,16 @@
+import { JobHandler } from '../components/job-handler'
 import { CompletedJob, type PendingJob } from '../components/types'
 
-const SampleJobHandler = async (job: PendingJob) => {
-  return new Promise<CompletedJob>((resolve) => {
-    resolve({
-      ...job,
-      status: 'success',
-      result: job.data,
+export class SampleJobHandler extends JobHandler {
+  public override process(job: PendingJob): Promise<CompletedJob> {
+    return new Promise<CompletedJob>((resolve) => {
+      resolve({
+        ...job,
+        status: 'success',
+        result: job.records,
+      })
     })
-  })
+  }
 }
 
 export default SampleJobHandler

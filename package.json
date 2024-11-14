@@ -1,7 +1,31 @@
 {
   "name": "bulk-task-runner",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "license": "MIT",
+  "repository": "github:jwilliamson-dev/BulkTaskRunner",
   "description": "process records in bulk",
+  "keywords": [
+    "bulk",
+    "task",
+    "process"
+  ],
+  "author": {
+    "name": "Jacob Williamson",
+    "email": "me@jacobwilliamson.dev"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "import": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
+    },
+    "require": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.cjs"
+    }
+  },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@types/eslint__js": "^8.42.3",
@@ -21,14 +45,5 @@
   "dependencies": {
     "csv-parse": "^5.5.6"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    "import": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
-  },
-  "prettier": "./prettier.config.js",
-  "repository": "jwilliamson-dev/BulkTaskRunner"
+  "prettier": "./prettier.config.js"
 }

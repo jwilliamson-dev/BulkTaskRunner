@@ -1,8 +1,8 @@
-import { JobData } from '../components/types'
+import { JobRecord } from '../components/types'
 
 async function* SampleJobReader(
   numJobsToRead: number
-): AsyncGenerator<JobData, void, void> {
+): AsyncGenerator<JobRecord, void, void> {
   for (let i = 0; i < numJobsToRead; i++) {
     yield {
       number: i,

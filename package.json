@@ -2,7 +2,10 @@
   "name": "bulk-task-runner",
   "version": "1.0.2",
   "license": "MIT",
-  "repository": "github:jwilliamson-dev/BulkTaskRunner",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwilliamson-dev/BulkTaskRunner.git"
+  },
   "description": "process records in bulk",
   "keywords": [
     "bulk",
@@ -39,7 +42,7 @@
   "scripts": {
     "build": "pkgroll --clean-dist",
     "format": "prettier -w .",
-    "lint": "eslint ."
+    "lint": "eslint ./src"
   },
   "type": "module",
   "dependencies": {
